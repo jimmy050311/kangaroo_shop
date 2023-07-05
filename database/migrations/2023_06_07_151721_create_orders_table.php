@@ -24,6 +24,11 @@ return new class extends Migration
             $table->decimal('total_amount', 9, 2)->comment('總數量');
             $table->integer('status')->comment('狀態 0=>未付款, 1=>已付款, 2=>已退款');
             $table->integer('ship_status')->comment('貨運狀態 0=>未出貨, 1=>已出貨, 2=>已退貨');
+            $table->string('country')->comment('國家');
+            $table->string('zipcode')->comment('郵遞區號');
+            $table->string('county')->comment('縣市');
+            $table->string('district')->comment('鄉鎮市區');
+            $table->string('address')->comment('地址');
             $table->string('remark')->comment('備註');
             $table->dateTime('paid_at')->nullable()->comment('付款時間');
             $table->dateTime('refund_at')->nullable()->comment('退款時間');

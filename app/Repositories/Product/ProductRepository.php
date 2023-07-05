@@ -51,6 +51,35 @@ class ProductRepository extends Repository implements ProductInterface
         $this->page = $query->count();
         $query = $query->paginate($params['paginate']);
 
-         return $query;
+        return $query;
+    }
+
+    public function frontendSearch($params)
+    {
+        $query = $this->module()->query()
+            ->select('products.*', 'product_category_relation.product_id', 'product_category_relation.category_id', 
+                'categories.name as category_name', 'categories.parent')
+            ->leftJoin('product_category_relation', 'products.id', 'product_category_relation.product_id')
+            ->leftJoin('categories', 'product_category_relation.category_id', 'categories.id');
+        if (isset($params['status']) && !is_null($params['status'])) {
+            $query = $query->where($this->module()->getTable() . '.status', (int) $params['status']);
+        }
+        if(isset($params['category']) && !is_null($params['category'])) {
+            $query = $query
+                    ->where(function($query) use ($params) {
+                        $query->where('categories.parent', $params['category'])
+                            ->orwhere($this->module()->getTable() . '.category_id', $params['category']);
+                    });
+        }
+        if(isset($params['priceOrder']) && !is_null($params['priceOrder'])) {
+            $query = $query->orderBy('real_price_twd', $params['priceOrder']);
+        }
+        $query = $query->orderBy('created_at', $params['timeOrder'] ?? 'desc');
+        
+        //取的符合資料
+        $this->page = $query->count();
+        $query = $query->paginate($params['paginate']);
+
+        return $query;
     }
 }

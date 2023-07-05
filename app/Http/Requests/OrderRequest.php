@@ -36,6 +36,11 @@ class OrderRequest extends FormRequest
             'status' => 'sometimes|bail|required|numeric',
             'ship_status' => 'sometimes|bail|required|numeric',
             'remark'=> 'sometimes|bail|required|string',
+            'country' => 'sometimes|bail|required|string',
+            'zipcode' => 'sometimes|bail|required|numeric',
+            'county' => 'sometimes|bail|required|string',
+            'district' => 'sometimes|bail|required|string',
+            'address' => 'sometimes|bail|required|string',
         ];
     }
 
@@ -59,6 +64,12 @@ class OrderRequest extends FormRequest
             'ship_status.required' => '貨運狀態不可為空',
             'ship_status.numeric' => '貨運狀態格式不正確',
             'remark.required'=> '備註不可為空',
+            'country.required' => '國家欄位不可為空',
+            'zipcode.required' => '郵遞區號欄位不可為空',
+            'zipcode.numeric' => '郵遞區號欄位格式不正確',
+            'county.required' => '縣市欄位不可為空',
+            'district.required' => '鄉鎮市區欄位不可為空',
+            'address.required' => '地址欄位不可為空',
         ];
     }
 

@@ -196,8 +196,9 @@
                         />
                     </div>
                     <div class="mt-3 col-md-12 d-flex justify-content-center">
-                        <button type="submit" class="col-md-6 btn btn-primary w-100px" v-if="orderData.status==0" @click="paid">確認付款</button>
-                        <button type="submit" class="col-md-6 btn btn-danger w-100px" v-if="orderData.status==1" @click="refundPaid">確認退款</button>
+                        <button type="submit" class="col-md-6 btn btn-warning w-100px" @click="editRemark">更新備註</button>
+                        <button type="submit" class="col-md-6 btn btn-lime w-100px ms-5" v-if="orderData.status==0" @click="paid">確認付款</button>
+                        <button type="submit" class="col-md-6 btn btn-danger w-100px ms-5" v-if="orderData.status==1" @click="refundPaid">確認退款</button>
                         <button type="submit" class="col-md-6 btn btn-primary w-100px ms-5" v-if="orderData.ship_status==0" @click="ship">確認出貨</button>
                         <button type="submit" class="col-md-6 btn btn-danger w-100px ms-5" v-if="orderData.ship_status==1" @click="refundShip">確認退貨</button>
                     </div>
@@ -305,8 +306,8 @@
         orderData.status = response.status
         orderData.ship_status = response.ship_status
         orderData.remark = response.remark
-        orderData.zipcode = response.user_zipcode
-        orderData.address = response.user_county + response.user_district + response.user_address
+        orderData.zipcode = response.zipcode
+        orderData.address = response.county + response.district + response.address
         orderData.bank_name = response.bank_name
         orderData.bank_code = response.bank_code
         orderData.branch_name = response.branch_name
@@ -347,6 +348,17 @@
             orderData.price += item.data[0].real_price_twd * item.amount
             orderData.total_price = orderData.price + orderData.ship - orderData.discount
             orderData.total_amount += item.amount
+        })
+    }
+
+    function editRemark() {
+        const data = {
+            remark: orderData.remark
+        }
+        orderStore.fetchEditOrder(orderId.value, data).then((response) => {
+            if(response) {
+              router.push({ name: 'order', params: {} })
+            }
         })
     }
 

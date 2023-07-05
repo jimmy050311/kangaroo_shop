@@ -8,11 +8,11 @@
 
             <!-- Page Banner Content End -->
             <div class="page-banner-content">
-                <h2 class="title">Contact Us</h2>
+                <h2 class="title">聯絡我們</h2>
 
                 <ul class="breadcrumb">
-                    <li><a href="index.html">Home</a></li>
-                    <li class="active">Contact Us</li>
+                    <li><a href="/">首頁</a></li>
+                    <li class="active">聯絡我們</li>
                 </ul>
             </div>
             <!-- Page Banner Content End -->
@@ -22,7 +22,7 @@
     <!-- Page Banner Section End -->
 
     <!-- Contact Section Start -->
-    <div class="section section-padding">
+    <div class="section section-padding" id="contactView">
         <div class="container">
 
             <!-- Contact Wrapper Start -->
@@ -30,7 +30,7 @@
                 <div class="row gx-0">
                     <div class="col-lg-4">
                         <div class="contact-info">
-                            <h2 class="title">Contact Info</h2>
+                            <h2 class="title">聯絡資訊</h2>
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit sed eiusmod</p>
 
                             <!-- Contact Info Items Start -->
@@ -83,41 +83,41 @@
 
                         <!-- Contact Form Start  -->
                         <div class="contact-form">
-                            <form id="contact-form" action="/assets2/php/contact.php" method="post">
+                            <!-- <form id="contact-form" action="/assets2/php/contact.php" method="post"> -->
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="single-form">
-                                            <input type="text" name="name" placeholder="Name*">
+                                            <input type="text" name="name" placeholder="姓名*" v-model="name">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="single-form">
-                                            <input type="email" name="email" placeholder="Email*">
+                                            <input type="email" name="email" placeholder="信箱*" v-model="email">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="single-form">
-                                            <input type="text" name="subject" placeholder="Subject">
+                                            <input type="text" name="subject" placeholder="標題" v-model="subject">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="single-form">
-                                            <input type="text" name="phone" placeholder="Phone No">
+                                            <input type="text" name="phone" placeholder="聯絡電話" v-model="phone">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="single-form">
-                                            <textarea name="message" placeholder="Write your comments here"></textarea>
+                                            <textarea name="message" placeholder="寫下您想知道的訊息" v-model="comments"></textarea>
                                         </div>
                                     </div>
                                     <p class="form-message"></p>
                                     <div class="col-md-12">
                                         <div class="single-form">
-                                            <button type="submit" class="btn btn-dark btn-hover-primary">Submit Review</button>
+                                            <button type="submit" class="btn btn-dark btn-hover-primary" @click="submit()">提交</button>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+                            <!-- </form> -->
                         </div>
                         <!-- Contact Form End  -->
 
@@ -132,9 +132,49 @@
 
     <!-- Contact Map Start -->
     <div class="contact-map">
-        <iframe id="gmap_canvas" src="https://maps.google.com/maps?q=Mission%20District%2C%20San%20Francisco%2C%20CA%2C%20USA&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+        <iframe id="gmap_canvas" src="https://maps.google.com/maps?q=桃園市桃園區莊一街47號&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
     </div>
     <!-- Contact Map End -->
 
+    <script>
 
+        new Vue({
+            el: '#contactView',
+            data: {
+                name: '',
+                phone: '',
+                email: '',
+                subject: '',
+                comments: '',
+            },
+            methods: {
+                submit: function() {
+                    const data = {
+                        name: this.name,
+                        phone: this.phone,
+                        email: this.email,
+                        subject: this.subject,
+                        comments: this.comments,
+                    }
+                    axios.post('/front/contact/api', data)
+                    .then((response) => {
+                        Swal.fire('成功!', response['data']['message'],'success')
+                        .then((result) => {
+                            if (result.isConfirmed) {
+                                this.name = ''
+                                this.phone = ''
+                                this.email = ''
+                                this.subject = ''
+                                this.comments = ''
+                            }
+                        })
+                    })
+                    .catch((error) => {
+                        Swal.fire('失敗!', error.response.data.message,'error')
+                    })
+                }
+            },
+        })
+
+    </script>
 @endsection

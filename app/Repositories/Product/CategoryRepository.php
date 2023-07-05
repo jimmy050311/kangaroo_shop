@@ -16,7 +16,11 @@ class CategoryRepository extends Repository implements CategoryInterface
 
     public function searchAll($params)
     {
-        return $this->module()->orderBy('sort', 'asc')->get();
+        $query = $this->module()->orderBy('sort', 'asc');
+        if (isset($params['status']) && !is_null($params['status'])) {
+            $query = $query->where($this->module()->getTable() . '.status', (int) $params['status']);
+        }
+        return $query->get();
     }
 
     public function deleteAll()

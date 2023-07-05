@@ -127,4 +127,15 @@ class ProductService extends Service
             ]);
         }
     }
+
+    public function frontendSearch($params)
+    {
+        $total = $this->repository->total();
+        $data = [
+            'total' => $total,
+            'data' => $this->repository->frontendSearch($params),
+        ];
+
+        return $data;
+    }
 }

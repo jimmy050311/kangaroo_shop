@@ -8,11 +8,11 @@
 
          <!-- Page Banner Content End -->
         <div class="page-banner-content">
-            <h2 class="title">My Account</h2>
+            <h2 class="title">會員中心</h2>
 
              <ul class="breadcrumb">
-                <li><a href="index.html">Home</a></li>
-                <li class="active">My Account</li>
+                <li><a href="/">首頁</a></li>
+                <li class="active">會員中心</li>
             </ul>
         </div>
         <!-- Page Banner Content End -->
@@ -33,8 +33,9 @@
                     @include('account.order')
                     @include('account.download')
                     @include('account.payment')
-                    @include('account.address')                    
+                    @include('account.address')                 
                     @include('account.member')
+                    @include('account.password')
                 </div>
                 <!-- Tab content End -->
             </div>

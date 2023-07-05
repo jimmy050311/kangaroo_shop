@@ -13,4 +13,9 @@ class UserRepository extends Repository implements UserInterface
     {
         return app(User::class);
     }
+
+    public function searchByAccount($account)
+    {
+        return User::where('account', $account)->first();
+    }
 }

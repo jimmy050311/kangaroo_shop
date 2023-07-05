@@ -4,9 +4,9 @@ namespace App\Interfaces\Product;
 
 use Illuminate\Database\Eloquent\Model;
 
-interface ProductInterface
+interface ProductCommentInterface
 {
     public function module(): Model;
 
-    public function frontendSearch($params);
+    public function searchByProductId($params);
 }

@@ -7,11 +7,11 @@
 
          <!-- Page Banner Content End -->
         <div class="page-banner-content">
-            <h2 class="title">About Us</h2>
+            <h2 class="title">關於我們</h2>
 
              <ul class="breadcrumb">
-                <li><a href="index.html">Home</a></li>
-                <li class="active">About Us</li>
+                <li><a href="/">首頁</a></li>
+                <li class="active">關於我們</li>
             </ul>
         </div>
         <!-- Page Banner Content End -->

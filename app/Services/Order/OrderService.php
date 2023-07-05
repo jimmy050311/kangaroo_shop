@@ -36,6 +36,11 @@ class OrderService extends Service
             'status' => $params['status'],
             'ship_status' => $params['ship_status'],
             'remark' => $params['remark'],
+            'country' => $params['country'],
+            'zipcode' => $params['zipcode'],
+            'county' => $params['county'],
+            'district' => $params['district'],
+            'address' => $params['address'],
         ];
         if($params['status'] == "1") {
             $data['paid_at'] = date('Y-m-d h:i:s', time());

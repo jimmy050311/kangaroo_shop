@@ -23,8 +23,11 @@ Route::get('/contact', function() {
 Route::get('/about', function() {
     return view('home/about');
 });
-Route::get('/shop', function() {
+Route::get('/shop/{id}', function() {
     return view('home/shop');
+});
+Route::group(['prefix' => '/'], function() {
+    Route::get('/product/{id}', [\App\Http\Controllers\Frontend\Product\ProductController::class, 'loadView']);
 });
 Route::get('/cart', function() {
     return view('account/cart');
@@ -104,8 +107,40 @@ Route::group(['prefix' => '/manage', 'middleware' => 'verfied.auth'], function()
     });
 });
 
-//後台api
+//前台api
+Route::prefix('front')->group(function() {
+    Route::prefix('user')->group(function() {
+        Route::get('/api/{id}', [\App\Http\Controllers\Frontend\User\UserController::class, 'show']);
+        Route::put('/api/{id}', [\App\Http\Controllers\Frontend\User\UserController::class, 'update']);
+        Route::post('/api/login', [\App\Http\Controllers\Frontend\User\UserController::class, 'login']);
+        Route::post('/api/logout', [\App\Http\Controllers\Frontend\User\UserController::class, 'logout']);
+    });
+    Route::prefix('category')->group(function() {
+        Route::get('/api', [\App\Http\Controllers\Frontend\Category\CategoryController::class, 'index']);
+    });
+    Route::prefix('product')->group(function() {
+        Route::get('/api', [\App\Http\Controllers\Frontend\Product\ProductController::class, 'index']);
+        Route::get('/api/{id}', [\App\Http\Controllers\Frontend\Product\ProductController::class, 'show']);
+    });
+    Route::prefix('contact')->group(function() {
+        Route::post('/api', [\App\Http\Controllers\Frontend\Contact\ContactController::class, 'store']);
+    });
+    Route::prefix('cart')->group(function() {
+        Route::post('/api', [\App\Http\Controllers\Frontend\Cart\CartController::class, 'store']);
+        Route::get('/api/{id}', [\App\Http\Controllers\Frontend\Cart\CartController::class, 'show']);
+        Route::delete('/api/{id}', [\App\Http\Controllers\Frontend\Cart\CartController::class, 'destroy']);
+        Route::post('/api/clear', [\App\Http\Controllers\Frontend\Cart\CartController::class, 'clearCart']);
+    });
+    Route::prefix('product-comment')->group(function() {
+        Route::post('/api', [\App\Http\Controllers\Frontend\Product\ProductCommentController::class, 'store']);
+        Route::get('/api', [\App\Http\Controllers\Frontend\Product\ProductCommentController::class, 'index']);
+    });
+    Route::prefix('order')->group(function() {
+        Route::post('/api', [\App\Http\Controllers\Frontend\Order\OrderController::class, 'store']);
+    });
+});
 
+//後台api
 Route::prefix('v1')->group(function() {
     //管理員
     Route::prefix('admin')->group(function() {

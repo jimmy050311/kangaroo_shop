@@ -19,6 +19,7 @@
                         placeholder="請選擇會員"
                         filterable
                         :options="userOptions"
+                        @update:value="getUserAddress(orderData.user_id)"
                     />
                     <label class="form-label col-form-label col-md-12 d-flex fs-7 mt-1">購買商品</label>
                     <n-dynamic-input v-model:value="orderProductValue" :on-create="onProductCreate" :on-remove="productChange" @update:value="productChange()">
@@ -104,6 +105,54 @@
                         filterable
                         :options="shipStatusOptions"
                     />
+                    <div class="row row-cols-lg-auto align-items-center">
+                        <div class="col-12">
+                            <label class="form-label col-form-label col-md-12 d-flex fs-7">國家</label>
+                        </div>
+                        <div class="col-12">
+                            <n-space>
+                                <n-button strong secondary size="tiny" type="info" @click="setUserAddress">同會員地址</n-button>
+                            </n-space>
+                        </div>
+                        <div class="col-12" style="height:3px">
+                            <n-space>&nbsp;</n-space>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <input class="form-control" v-model="orderData.country" disabled="disabled"/>
+                    </div>
+                    <label class="form-label col-form-label col-md-12 d-flex fs-7">縣市</label>
+                    <div class="col-md-12">
+                        <n-select
+                            label-field="name"
+                            value-field="name"
+                            placeholder=""
+                            filterable
+                            :options="countyOptions"
+                            @update:value="setCounty"
+                            v-model:value="orderData.county"
+                        />
+                    </div>
+                    <label class="form-label col-form-label col-md-12 d-flex fs-7">鄉鎮市區</label>
+                    <div class="col-md-12">
+                        <n-select
+                            label-field="name"
+                            value-field="name"
+                            placeholder=""
+                            filterable
+                            :options="districtOptions"
+                            @update:value="setDistrict"
+                            v-model:value="orderData.district"
+                        />
+                    </div>
+                    <label class="form-label col-form-label col-md-12 d-flex fs-7">郵遞區號</label>
+                    <div class="col-md-12">
+                        <input class="form-control" v-model="orderData.zipcode" disabled="disabled"/>
+                    </div>
+                    <label class="form-label col-form-label col-md-12 d-flex fs-7">地址</label>
+                    <div class="col-md-12">
+                        <input class="form-control" v-model="orderData.address"/>
+                    </div>
                     <label class="form-label col-form-label col-md-12 d-flex fs-7">備註</label>
                     <div class="col-md-12">
                         <n-input
@@ -125,15 +174,17 @@
     </div>
 </template>
 <script setup>
-    import { NButton, NModal, NInputNumber, NSelect, NInput, NDynamicInput } from "naive-ui"
+    import { NButton, NModal, NInputNumber, NSelect, NInput, NDynamicInput, NSpace } from "naive-ui"
     import { ref, reactive, onMounted, computed, watch, h } from "vue"
     import { useProductStore } from "@/stores/backend/product.js"
     import { useUserStore } from "@/stores/backend/user.js"
     import { useOrderStore } from "@/stores/backend/order.js"
+    import { useAddressStore } from "@/stores/taiwan-address.js"
     import { useRouter } from "vue-router"
 
     const router = useRouter()
     const productStore = useProductStore()
+    const useAddress = useAddressStore()
     const userStore = useUserStore()
     const orderStore = useOrderStore()
     const orderProductValue = ref([])
@@ -149,6 +200,18 @@
         status: 0,
         ship_status: 0,
         remark: '',
+        country: "台灣",
+        zipcode: '',
+        county: '',
+        district: '',
+        address: '',
+    })
+    const userData = reactive({
+        country: "台灣",
+        zipcode: '',
+        county: '',
+        district: '',
+        address: '',
     })
     var productData = []
     const statusOptions = ref([
@@ -171,6 +234,8 @@
           value: 1
         },
     ])
+    const countyOptions = useAddress.countyData
+    const districtOptions = ref()
 
     onMounted(() => {
       const data = {
@@ -202,6 +267,25 @@
       })
     })
 
+    function getUserAddress(id) {
+        userStore.fetchUserDetail(id).then((response) => {
+            userData.country = response.country
+            userData.zipcode = response.zipcode
+            userData.county = response.county
+            userData.district = response.district
+            userData.address = response.address
+        })
+    }
+
+    function setUserAddress() {
+        orderData.country = "台灣"
+        orderData.zipcode = userData.zipcode
+        orderData.county = userData.county
+        orderData.district = userData.district
+        orderData.address = userData.address
+        districtOptions.value = useAddress.districtData[userData.county]
+    }
+
     function onProductCreate() {
         return {
             id: productOptions[0].value,
@@ -229,6 +313,16 @@
         })
     }
 
+    function setCounty(val, option) {
+        orderData.county = val
+        districtOptions.value = useAddress.districtData[val]
+        orderData.district = ''
+    }
+    function setDistrict(val, option) {
+        orderData.district = val
+        orderData.zipcode = option.zip
+    }
+
     function submit() {
         const data = {
             user_id: orderData.user_id,
@@ -240,7 +334,12 @@
             status: orderData.status,
             ship_status: orderData.ship_status,
             remark: orderData.remark,
-            productData: productData
+            productData: productData,
+            country: orderData.country,
+            zipcode: orderData.zipcode,
+            county: orderData.county,
+            district: orderData.district,
+            address: orderData.address,
         }
         orderStore.fetchCreateOrder(data).then((response) => {
             if(response) {

@@ -21,6 +21,9 @@
                 <a data-bs-toggle="pill" href="#pills-account"><i class="fa fa-user"></i> 會員編輯</a>
             </li>
             <li>
+                <a data-bs-toggle="pill" href="#pills-password"><i class="fa fa-key"></i> 更改密碼</a>
+            </li>
+            <li>
                 <a href="/sign"><i class="fa fa-sign-out"></i> 登出</a>
             </li>
         </ul>
