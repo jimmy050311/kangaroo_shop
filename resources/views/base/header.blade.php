@@ -2,7 +2,7 @@
     <meta charset="utf-8">
     <!-- <meta http-equiv="x-ua-compatible" content="ie=edge"> -->
     <title>袋鼠購物趣</title>
-    <meta name="robots" content="noindex, follow" />
+    <!-- <meta name="robots" content="noindex, follow" /> -->
     <meta name="description" content="袋鼠購物趣，挑戰市場最低價">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicon -->
