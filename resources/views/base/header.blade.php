@@ -2,7 +2,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="袋鼠購物趣，挑戰市場最低價">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">\
+    <meta property="og:title" content="袋鼠購物趣">
+    <meta property="og:description" content="袋鼠購物趣，挑戰市場最低價">
     <meta property="og:image" content="https://kangrooshop.com/storage/7QVpWDmeugbKsoNlPqsGJXLVA11PM28pbmIlMCQa.jpg">
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="/assets2/images/favicon.png">
