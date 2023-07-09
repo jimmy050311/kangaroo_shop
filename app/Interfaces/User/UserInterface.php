@@ -9,4 +9,5 @@ interface UserInterface
     public function module(): Model;
 
     public function searchByAccount($account);
+
 }

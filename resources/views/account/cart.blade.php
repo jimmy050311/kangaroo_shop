@@ -291,18 +291,21 @@
                     showCloseButton: true,
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        const data = {
-                            user_id: user_id
-                        }
-                        axios.post('/front/cart/api/clear', data)
-                        .then((response) => {
-                            Swal.fire('成功', response['data']['message'], 'success')
-                            this.fetchCart()
-                        })
-                        .catch((error) => {
-                            Swal.fire('失敗!', error.response.data.message,'error')
-                        })
+                        this.clear()
                     }
+                })
+            },
+            clear: function() {
+                const data = {
+                    user_id: user_id
+                }
+                axios.post('/front/cart/api/clear', data)
+                .then((response) => {
+                    Swal.fire('成功', response['data']['message'], 'success')
+                    this.fetchCart()
+                })
+                .catch((error) => {
+                    Swal.fire('失敗!', error.response.data.message,'error')
                 })
             },
             submit: function() {
@@ -341,21 +344,7 @@
                 }
                 axios.post('/front/order/api', data)
                 .then((response) => {
-                    const data = {
-                        user_id: user_id
-                    }
-                    axios.post('/front/cart/api/clear', data)
-                    .then((response) => {
-                        Swal.fire('成功', response['data']['message'], 'success')
-                        .then((result) => {
-                            if(result.isConfirmed) {
-                                window.location.href = "/"
-                            }
-                        })
-                    })
-                    .catch((error) => {
-                        Swal.fire('失敗!', error.response.data.message,'error')
-                    })
+                    this.clear()
                 })
                 .catch((error) => {
                     Swal.fire('失敗!', error.response.data.message,'error')

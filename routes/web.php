@@ -112,6 +112,7 @@ Route::prefix('front')->group(function() {
     Route::prefix('user')->group(function() {
         Route::get('/api/{id}', [\App\Http\Controllers\Frontend\User\UserController::class, 'show']);
         Route::put('/api/{id}', [\App\Http\Controllers\Frontend\User\UserController::class, 'update']);
+        Route::put('/api/change-password/{id}', [\App\Http\Controllers\Frontend\User\UserController::class, 'changePassword']);
         Route::post('/api/login', [\App\Http\Controllers\Frontend\User\UserController::class, 'login']);
         Route::post('/api/logout', [\App\Http\Controllers\Frontend\User\UserController::class, 'logout']);
     });
@@ -136,6 +137,7 @@ Route::prefix('front')->group(function() {
         Route::get('/api', [\App\Http\Controllers\Frontend\Product\ProductCommentController::class, 'index']);
     });
     Route::prefix('order')->group(function() {
+        Route::get('/api', [\App\Http\Controllers\Frontend\Order\OrderController::class, 'index']);
         Route::post('/api', [\App\Http\Controllers\Frontend\Order\OrderController::class, 'store']);
     });
 });

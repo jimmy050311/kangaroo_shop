@@ -18,4 +18,5 @@ class UserRepository extends Repository implements UserInterface
     {
         return User::where('account', $account)->first();
     }
+
 }

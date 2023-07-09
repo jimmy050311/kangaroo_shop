@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\PasswordRequest;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\JsonResponse;
@@ -49,6 +50,26 @@ class UserController extends Controller
             $response = [
                 'success' => 200,
                 'message' => '修改成功',
+            ];
+
+        }catch(Exception $e) {
+            $response = [
+                'success' => 400,
+                'message' => $e->getMessage()
+            ];
+        }
+
+        return response()->json($response, $response['success']);
+    }
+
+    public function changePassword($id, PasswordRequest $request): JsonResponse
+    {
+        try {
+
+            $this->service->changePassword($id, $request->all());
+            $response = [
+                'success' => 200,
+                'message' => '密碼修改成功'
             ];
 
         }catch(Exception $e) {

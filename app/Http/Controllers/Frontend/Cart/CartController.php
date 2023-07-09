@@ -88,7 +88,7 @@ class CartController extends Controller
 
             $response = [
                 'success' => 200,
-                'message' => '成功',
+                'message' => '購物車清除成功',
             ];
 
         }catch(Exception $e) {

@@ -28,4 +28,13 @@ class UserService extends Service
 
         return $user;
     }
+
+    public function changePassword($id, $params)
+    {
+        $user = $this->repository->searchById($id);
+        if($user->password != $params['old_password']) {
+            throw new Exception('舊密碼輸入錯誤');
+        }
+        $this->repository->edit($id, ['password' => $params['password']]);
+    }
 }

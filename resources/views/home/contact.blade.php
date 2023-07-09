@@ -137,7 +137,7 @@
     <!-- Contact Map End -->
 
     <script>
-
+        
         new Vue({
             el: '#contactView',
             data: {
@@ -146,6 +146,9 @@
                 email: '',
                 subject: '',
                 comments: '',
+            },
+            mounted() {
+                
             },
             methods: {
                 submit: function() {
@@ -156,6 +159,8 @@
                         subject: this.subject,
                         comments: this.comments,
                     }
+                    
+                    loadingShow()
                     axios.post('/front/contact/api', data)
                     .then((response) => {
                         Swal.fire('成功!', response['data']['message'],'success')
