@@ -9,7 +9,7 @@
                 <div class="col-lg-3">
                     <!-- Header Logo Start -->
                     <div class="header-logo">
-                        <a href="/"><img src="/assets2/images/logo.png" alt="Logo"></a>
+                        <a href="/"><img src="/assets2/images/logo-9.png" alt="Logo"></a>
                     </div>
                     <!-- Header Logo End -->
                 </div>
@@ -192,7 +192,7 @@
 
                          <!-- Header Logo Start -->
                         <div class="header-logo text-center">
-                            <a href="/"><img src="/assets2/images/logo.png" alt="Logo"></a>
+                            <a href="/"><img src="/assets2/images/logo-9.png" alt="Logo"></a>
                         </div>
                         <!-- Header Logo End -->
 
@@ -340,7 +340,7 @@
 
                     <!-- Footer Logo Start -->
                     <div class="footer-logo">
-                        <a href="index.html"><img src="/assets2/images/logo.png" alt="Logo"></a>
+                        <a href="index.html"><img src="/assets2/images/logo-9.png" alt="Logo"></a>
                     </div>
                     <!-- Footer Logo End -->
 
