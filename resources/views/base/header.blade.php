@@ -6,7 +6,7 @@
     <meta property="og:title" content="袋鼠購物趣">
     <meta property="og:description" content="袋鼠購物趣，挑戰市場最低價">
     <meta property="og:url" content="https://kangrooshop.com">
-    <meta property="og:image" content="https://kangrooshop.com/storage/7QVpWDmeugbKsoNlPqsGJXLVA11PM28pbmIlMCQa.jpg">
+    <meta property="og:image" content="/assets2/images/favicon.png">
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="/assets2/images/favicon.png">
     <link rel="apple-touch-icon" href="/assets2/images/favicon.png">
